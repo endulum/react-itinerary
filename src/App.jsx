@@ -1,13 +1,11 @@
-import { Component } from 'react';
-
-import context from './components/Context';
 import Lists from './components/Lists';
+import { DataProvider } from './components/Context';
 
 export default function App() {
   return (
-    <context.Provider>
+    <DataProvider>
       <h1>Itinerary</h1>
       <Lists />
-    </context.Provider>
+    </DataProvider>
   );
 }

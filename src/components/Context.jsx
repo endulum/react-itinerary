@@ -1,7 +1,12 @@
 /* eslint-disable no-param-reassign */
-import { createContext, useReducer, useEffect } from 'react';
+/* eslint-disable import/prefer-default-export */
 
-const Context = createContext();
+import {
+  createContext, useReducer, useEffect, useContext,
+} from 'react';
+
+const DataContext = createContext();
+const DataDispatchContext = createContext();
 
 const initialLists = [
   {
@@ -31,7 +36,7 @@ const initialLists = [
   },
 ];
 
-const listsReducer = (lists, action) => {
+const dataReducer = (lists, action) => {
   switch (action.type) {
     //
     // list reducers
@@ -111,25 +116,22 @@ const listsReducer = (lists, action) => {
   }
 };
 
-const localLists = JSON.parse(localStorage.getItem('lists'));
-
-function Provider({ children }) {
-  const [lists, dispatchLists] = useReducer(listsReducer, localLists || initialLists);
-  useEffect(() => {
-    console.log(lists);
-    localStorage.setItem('lists', JSON.stringify(lists));
-  }, [lists]);
+export function DataProvider({ children }) {
+  const localData = JSON.parse(localStorage.getItem('data'));
+  const [data, dispatchData] = useReducer(dataReducer, localData || initialLists);
+  useEffect(() => { localStorage.setItem('data', JSON.stringify(data)); }, [data]);
 
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <Context.Provider value={{ lists, dispatchLists }}>
-      {children}
-    </Context.Provider>
+    <DataContext.Provider value={data}>
+      <DataDispatchContext.Provider value={dispatchData}>
+        {children}
+      </DataDispatchContext.Provider>
+    </DataContext.Provider>
   );
 }
 
-const { Consumer } = Context;
+export function useData() { return useContext(DataContext); }
+export function useDataDispatch() { return useContext(DataDispatchContext); }
 
-const context = { Provider, Consumer };
-
-export default context;
+// gyrad/multi-todo
+// react.dev/learn/scaling-up-with-reducer-and-context
