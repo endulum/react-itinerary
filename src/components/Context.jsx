@@ -4,6 +4,7 @@
 import {
   createContext, useReducer, useEffect, useContext,
 } from 'react';
+import { v4 as uuid } from 'uuid';
 
 const DataContext = createContext();
 const DataDispatchContext = createContext();
@@ -43,7 +44,7 @@ const dataReducer = (lists, action) => {
     case 'list_add': return [
       ...lists,
       {
-        id: lists.length + 1,
+        id: uuid().toString(),
         title: action.title,
         tasks: [],
       },
@@ -79,7 +80,7 @@ const dataReducer = (lists, action) => {
         if (list.id === action.listId) {
           if (action.total === list.tasks.length) {
             list.tasks = [...list.tasks, {
-              id: list.tasks.length + 1,
+              id: uuid().toString(),
               text: action.text,
               done: false,
             }];
