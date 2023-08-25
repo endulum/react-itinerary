@@ -1,3 +1,4 @@
+import { Link, useLoaderData } from 'react-router-dom';
 import { useState } from 'react';
 // my context
 import { useDataDispatch } from './Context';
@@ -5,6 +6,16 @@ import { useDataDispatch } from './Context';
 import Tasks from './Tasks';
 
 export default function List({ list }) {
+  let listData;
+  if (list) listData = list;
+
+  else {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const loaderData = useLoaderData().list;
+    // eslint-disable-next-line prefer-destructuring
+    listData = loaderData[0];
+  }
+
   const dispatch = useDataDispatch();
   const [isEditing, setIsEditing] = useState(false);
   return (
@@ -14,11 +25,11 @@ export default function List({ list }) {
           <>
             <input
               type="text"
-              value={list.title}
+              value={listData.title}
               onChange={(e) => {
                 dispatch({
                   type: 'list_change_title',
-                  id: list.id,
+                  id: listData.id,
                   title: e.target.value,
                 });
               }}
@@ -31,7 +42,7 @@ export default function List({ list }) {
         )}
         {!isEditing && (
           <>
-            <h2>{list.title}</h2>
+            <h2>{listData.title}</h2>
             <button type="button" onClick={() => setIsEditing(true)}>Edit Title</button>
           </>
         )}
@@ -40,14 +51,23 @@ export default function List({ list }) {
           onClick={() => {
             dispatch({
               type: 'list_delete',
-              id: list.id,
+              id: listData.id,
             });
           }}
         >
           Delete List
         </button>
+        <Link to={{
+          pathname: `lists/${listData.id}`,
+          query: {
+            id: listData.id,
+          },
+        }}
+        >
+          View
+        </Link>
       </div>
-      <Tasks tasks={list.tasks} listId={list.id} />
+      <Tasks tasks={listData.tasks} listId={listData.id} />
     </div>
   );
 }

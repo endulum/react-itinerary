@@ -11,28 +11,28 @@ const DataDispatchContext = createContext();
 
 const initialLists = [
   {
-    id: 0,
+    id: uuid().toString(),
     title: 'First list',
     tasks: [
-      { id: 0, text: 'First task of first list', done: false },
-      { id: 1, text: 'Second task of first list', done: false },
-      { id: 2, text: 'Third task of first list', done: false },
+      { id: uuid().toString(), text: 'First task of first list', done: false },
+      { id: uuid().toString(), text: 'Second task of first list', done: false },
+      { id: uuid().toString(), text: 'Third task of first list', done: false },
     ],
   }, {
-    id: 2,
+    id: uuid().toString(),
     title: 'Second list',
     tasks: [
-      { id: 0, text: 'First task of second list', done: false },
-      { id: 1, text: 'Second task of second list', done: false },
-      { id: 2, text: 'Third task of second list', done: false },
+      { id: uuid().toString(), text: 'First task of second list', done: false },
+      { id: uuid().toString(), text: 'Second task of second list', done: false },
+      { id: uuid().toString(), text: 'Third task of second list', done: false },
     ],
   }, {
-    id: 3,
+    id: uuid().toString(),
     title: 'Third list',
     tasks: [
-      { id: 0, text: 'First task of third list', done: false },
-      { id: 1, text: 'Second task of third list', done: false },
-      { id: 2, text: 'Third task of third list', done: false },
+      { id: uuid().toString(), text: 'First task of third list', done: false },
+      { id: uuid().toString(), text: 'Second task of third list', done: false },
+      { id: uuid().toString(), text: 'Third task of third list', done: false },
     ],
   },
 ];
