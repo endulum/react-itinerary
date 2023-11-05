@@ -1,13 +1,19 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Task from './Task';
 
 export default function List({
-  list, onEditListTitle, onEditTaskText, isEditable,
+  list, dispatch, isEditable,
 }) {
   const [changing, setChanging] = useState(false);
   function toggleChanging() { setChanging(!changing); }
+  function handleEditListTitle(listId, title) {
+    dispatch({
+      type: 'edit_list_title',
+      listId,
+      title,
+    });
+  }
   return (
     <section key={list.id}>
       {changing ? (
@@ -16,7 +22,7 @@ export default function List({
             type="text"
             defaultValue={list.title}
             onChange={(e) => {
-              onEditListTitle(list.id, e.target.value);
+              handleEditListTitle(list.id, e.target.value);
             }}
           />
           <button type="button" onClick={toggleChanging}>Save Title</button>
@@ -36,7 +42,8 @@ export default function List({
               listId={list.id}
               key={task.id}
               task={task}
-              onEditTaskText={onEditTaskText}
+              dispatch={dispatch}
+              // onEditTaskText={onEditTaskText}
               isEditable={isEditable}
             />
           ))}
@@ -56,8 +63,9 @@ List.propTypes = {
       done: PropTypes.bool,
     })),
   }).isRequired,
-  onEditListTitle: PropTypes.func.isRequired,
-  onEditTaskText: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  // onEditListTitle: PropTypes.func.isRequired,
+  // onEditTaskText: PropTypes.func.isRequired,
   isEditable: PropTypes.bool,
 };
 

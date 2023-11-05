@@ -2,10 +2,18 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function Task({
-  listId, task, isEditable, onEditTaskText,
+  listId, task, isEditable, dispatch,
 }) {
   const [changing, setChanging] = useState(false);
   function toggleChanging() { setChanging(!changing); }
+  function handleEditTaskText(listId, taskId, text) {
+    dispatch({
+      type: 'edit_task_text',
+      listId,
+      taskId,
+      text,
+    });
+  }
 
   return changing ? (
     <li>
@@ -13,7 +21,7 @@ export default function Task({
         type="text"
         defaultValue={task.text}
         onChange={(e) => {
-          onEditTaskText(listId, task.id, e.target.value);
+          handleEditTaskText(listId, task.id, e.target.value);
         }}
       />
       <button type="button" onClick={toggleChanging}>Save Text</button>
@@ -34,7 +42,8 @@ Task.propTypes = {
     text: PropTypes.string,
     done: PropTypes.bool,
   }).isRequired,
-  onEditTaskText: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  // onEditTaskText: PropTypes.func.isRequired,
   isEditable: PropTypes.bool,
 };
 

@@ -1,31 +1,12 @@
-import { useState, useReducer } from 'react';
+import { useReducer } from 'react';
 import {
-  Routes, Route, Outlet, Navigate, Link,
+  Routes, Route, Outlet, Link,
 } from 'react-router-dom';
 import defaultData from './defaultData';
 import List from './itinerary-components/List';
 import Overview from './itinerary-components/Overview';
 
 export default function App() {
-  const [lists, dispatch] = useReducer(itineraryReducer, defaultData);
-
-  function handleEditListTitle(listId, title) {
-    dispatch({
-      type: 'edit_list_title',
-      listId,
-      title,
-    });
-  }
-
-  function handleEditTaskText(listId, taskId, text) {
-    dispatch({
-      type: 'edit_task_text',
-      listId,
-      taskId,
-      text,
-    });
-  }
-
   function itineraryReducer(lists, action) {
     switch (action.type) {
       case 'edit_list_title':
@@ -49,6 +30,7 @@ export default function App() {
         throw new Error(`Unknown action tyoe ${action.type}`);
     }
   }
+  const [lists, dispatch] = useReducer(itineraryReducer, defaultData);
 
   return (
     <Routes>
@@ -58,8 +40,7 @@ export default function App() {
           element={(
             <Overview
               lists={lists}
-              onEditListTitle={handleEditListTitle}
-              onEditTaskText={handleEditTaskText}
+              dispatch={dispatch}
             />
           )}
         />
@@ -71,8 +52,7 @@ export default function App() {
               <>
                 <List
                   list={list}
-                  onEditListTitle={handleEditListTitle}
-                  onEditTaskText={handleEditTaskText}
+                  dispatch={dispatch}
                   isEditable
                 />
                 <Link to="/">

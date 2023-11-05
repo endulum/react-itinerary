@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import List from './List';
 
-export default function Overview({ lists, onEditListTitle, onEditTaskText }) {
+export default function Overview({ lists, dispatch }) {
   return (
     <>
       {lists.length > 0 ? lists.map((list) => (
@@ -10,8 +10,9 @@ export default function Overview({ lists, onEditListTitle, onEditTaskText }) {
           <List
             list={list}
             isEditable={false}
-            onEditListTitle={onEditListTitle}
-            onEditTaskText={onEditTaskText}
+            dispatch={dispatch}
+            // onEditListTitle={onEditListTitle}
+            // onEditTaskText={onEditTaskText}
           />
           <Link to={`/list/${list.id}`}>
             <button type="button">Edit this list</button>
@@ -40,4 +41,5 @@ Overview.propTypes = {
       done: PropTypes.bool,
     })),
   })).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
