@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export default function Task({ task }) {
+export default function Task({ task, isEditable }) {
   const [changing, setChanging] = useState(false);
   function toggleChanging() { setChanging(!changing); }
 
@@ -14,7 +14,7 @@ export default function Task({ task }) {
     <li>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label>{task.text}</label>
-      <button type="button" onClick={toggleChanging}>Change Text</button>
+      {isEditable && <button type="button" onClick={toggleChanging}>Change Text</button>}
     </li>
   );
 }
@@ -25,4 +25,5 @@ Task.propTypes = {
     text: PropTypes.string,
     done: PropTypes.bool,
   }).isRequired,
+  isEditable: PropTypes.bool.isRequired,
 };

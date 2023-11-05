@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Task from './Task';
 
-export default function List({ list }) {
+export default function List({ list, isEditable }) {
   const [changing, setChanging] = useState(false);
   function toggleChanging() { setChanging(!changing); }
 
@@ -17,16 +18,22 @@ export default function List({ list }) {
       ) : (
         <div>
           <h2>{list.title}</h2>
-          <button type="button" onClick={toggleChanging}>Change Title</button>
+          {isEditable && <button type="button" onClick={toggleChanging}>Change Title</button>}
         </div>
       )}
 
       {list.tasks.length > 0 && (
         <ul>
           {list.tasks.map((task) => (
-            <Task key={task.id} task={task} />
+            <Task key={task.id} task={task} isEditable={isEditable} />
           ))}
         </ul>
+      )}
+
+      {isEditable && (
+        <Link to="/">
+          <button type="button">Overview</button>
+        </Link>
       )}
     </section>
   );
@@ -42,4 +49,5 @@ List.propTypes = {
       done: PropTypes.bool,
     })),
   }).isRequired,
+  isEditable: PropTypes.bool.isRequired,
 };
