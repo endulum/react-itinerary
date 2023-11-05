@@ -2,12 +2,17 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import List from './List';
 
-export default function Overview({ lists }) {
+export default function Overview({ lists, onEditListTitle, onEditTaskText }) {
   return (
     <>
       {lists.length > 0 ? lists.map((list) => (
         <div key={list.id}>
-          <List list={list} isEditable={false} />
+          <List
+            list={list}
+            isEditable={false}
+            onEditListTitle={onEditListTitle}
+            onEditTaskText={onEditTaskText}
+          />
           <Link to={`/list/${list.id}`}>
             <button type="button">Edit this list</button>
           </Link>

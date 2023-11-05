@@ -3,15 +3,22 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Task from './Task';
 
-export default function List({ list, isEditable }) {
+export default function List({
+  list, onEditListTitle, onEditTaskText, isEditable,
+}) {
   const [changing, setChanging] = useState(false);
   function toggleChanging() { setChanging(!changing); }
-
   return (
     <section key={list.id}>
       {changing ? (
         <div>
-          <input type="text" defaultValue={list.title} />
+          <input
+            type="text"
+            defaultValue={list.title}
+            onChange={(e) => {
+              onEditListTitle(list.id, e.target.value);
+            }}
+          />
           <button type="button" onClick={toggleChanging}>Save Title</button>
         </div>
 
@@ -25,7 +32,13 @@ export default function List({ list, isEditable }) {
       {list.tasks.length > 0 && (
         <ul>
           {list.tasks.map((task) => (
-            <Task key={task.id} task={task} isEditable={isEditable} />
+            <Task
+              listId={list.id}
+              key={task.id}
+              task={task}
+              onEditTaskText={onEditTaskText}
+              isEditable={isEditable}
+            />
           ))}
         </ul>
       )}
@@ -43,6 +56,8 @@ List.propTypes = {
       done: PropTypes.bool,
     })),
   }).isRequired,
+  onEditListTitle: PropTypes.func.isRequired,
+  onEditTaskText: PropTypes.func.isRequired,
   isEditable: PropTypes.bool,
 };
 
