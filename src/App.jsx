@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom';
 import defaultData from './defaultData';
 import List from './itinerary-components/List';
+import Overview from './itinerary-components/Overview';
 
 export default function App() {
   const [lists, setLists] = useState(defaultData);
@@ -36,25 +37,6 @@ function Layout() {
       <div>
         <Outlet />
       </div>
-    </>
-  );
-}
-
-function Overview({ lists }) {
-  return (
-    <>
-      {lists.map((list) => (
-        <div key={list.id}>
-          <List list={list} isEditable={false} />
-          <Link to={`/list/${list.id}`}>
-            <button type="button">Edit this list</button>
-          </Link>
-        </div>
-      ))}
-      <br />
-      <Link to="/bad">
-        <button type="button">Click here to 404!</button>
-      </Link>
     </>
   );
 }

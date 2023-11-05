@@ -49,5 +49,9 @@ List.propTypes = {
       done: PropTypes.bool,
     })),
   }).isRequired,
-  isEditable: PropTypes.bool.isRequired,
+  isEditable: PropTypes.bool,
+};
+
+List.defaultProps = {
+  isEditable: true,
 };

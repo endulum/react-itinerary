@@ -25,5 +25,9 @@ Task.propTypes = {
     text: PropTypes.string,
     done: PropTypes.bool,
   }).isRequired,
-  isEditable: PropTypes.bool.isRequired,
+  isEditable: PropTypes.bool,
+};
+
+Task.defaultProps = {
+  isEditable: true,
 };

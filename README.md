@@ -20,3 +20,7 @@ Exploration of React's features through a To-Do application.
 - [The Odin Project: .test.jsx Example](https://github.com/TheOdinProject/theodinproject/blob/0886578d5b27a967e6bba2b31f212efe284d9413/app/javascript/components/project-submissions/components/__tests__/submissions-list.test.jsx)
 - [Robin Wieruch: React Testing Library](https://www.robinwieruch.de/react-testing-library/)
 - [Robin Wieruch: Vitest with React Testing Library](https://www.robinwieruch.de/vitest-react-testing-library/)
+
+### Other
+- [The Odin Project: Type Checking With PropTypes](https://www.theodinproject.com/lessons/node-path-react-new-type-checking-with-proptypes)
+- [react.dev: PropTypes Validators](https://legacy.reactjs.org/docs/typechecking-with-proptypes.html#proptypes)
