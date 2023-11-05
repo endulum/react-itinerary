@@ -21,16 +21,12 @@ export default function List({ list }) {
         </div>
       )}
 
-      {list.tasks.length > 0 ? (
+      {list.tasks.length > 0 && (
         <ul>
           {list.tasks.map((task) => (
             <Task key={task.id} task={task} />
           ))}
         </ul>
-      ) : (
-        <div>
-          <span>No tasks here... add one!</span>
-        </div>
       )}
     </section>
   );

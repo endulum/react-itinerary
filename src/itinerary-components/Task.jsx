@@ -12,7 +12,8 @@ export default function Task({ task }) {
     </li>
   ) : (
     <li>
-      <span>{task.text}</span>
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label>{task.text}</label>
       <button type="button" onClick={toggleChanging}>Change Text</button>
     </li>
   );

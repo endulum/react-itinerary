@@ -26,22 +26,21 @@ describe('List render', async () => {
 
   it('should render a heading, button to change title, and unordered list of tasks', () => {
     render(<List list={dummy} />);
-    expect(screen.getByRole('heading', { name: 'Title of List A' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Change Title' })).toBeInTheDocument();
-    expect(screen.queryAllByRole('listitem').length).toBe(3);
+    screen.getByRole('heading', { name: 'Title of List A' });
+    screen.getByRole('button', { name: 'Change Title' });
+    screen.getByRole('list');
   });
 
-  it('should render a message instead of the task list if no tasks', () => {
+  it('should not render the unordered list if there are no tasks', () => {
     render(<List list={{
       id: '1',
       title: 'Title of List A',
       tasks: [],
     }}
     />);
-    expect(screen.getByRole('heading', { name: 'Title of List A' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Change Title' })).toBeInTheDocument();
-    expect(screen.queryAllByRole('listitem').length).toBe(0);
-    expect(screen.getByText('No tasks here... add one!')).toBeInTheDocument();
+    screen.getByRole('heading', { name: 'Title of List A' });
+    screen.getByRole('button', { name: 'Change Title' });
+    expect(() => screen.getByRole('list')).toThrow();
   });
 
   it('should render a textbox and button when button to change title is clicked', async () => {
@@ -50,12 +49,16 @@ describe('List render', async () => {
 
     const button1 = screen.getByRole('button', { name: 'Change Title' });
     await user.click(button1);
-    expect(screen.getByRole('textbox', { value: 'Title of List A' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Save Title' })).toBeInTheDocument();
+    screen.getByRole('textbox', { value: 'Title of List A' });
+    screen.getByRole('button', { name: 'Save Title' });
+    expect(() => screen.getByRole('heading', { name: 'Title of List A' })).toThrow();
+    expect(() => screen.getByRole('button', { name: 'Change Title' })).toThrow();
 
     const button2 = screen.getByRole('button', { name: 'Save Title' });
     await user.click(button2);
-    expect(screen.getByRole('heading', { name: 'Title of List A' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Change Title' })).toBeInTheDocument();
+    screen.getByRole('heading', { name: 'Title of List A' });
+    screen.getByRole('button', { name: 'Change Title' });
+    expect(() => screen.getByRole('textbox', { value: 'Title of List A' })).toThrow();
+    expect(() => screen.getByRole('button', { name: 'Save Title' })).toThrow();
   });
 });

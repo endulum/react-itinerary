@@ -12,8 +12,8 @@ describe('Task render', async () => {
 
   it('should render a span and a button to edit the text', () => {
     render(<Task task={dummy} />);
-    expect(screen.getByText('Task 1 of List A')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Change Text' })).toBeInTheDocument();
+    screen.getByText('Task 1 of List A');
+    screen.getByRole('button', { name: 'Change Text' });
   });
 
   it('should render an input and a button when button to edit task is clicked', async () => {
@@ -22,12 +22,16 @@ describe('Task render', async () => {
 
     const button1 = screen.getByRole('button', { name: 'Change Text' });
     await user.click(button1);
-    expect(screen.getByRole('textbox', { value: 'Task 1 of List A' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Save Text' })).toBeInTheDocument();
+    screen.getByRole('textbox', { value: 'Task 1 of List A' });
+    screen.getByRole('button', { name: 'Save Text' });
+    expect(() => screen.getByText('Task 1 of List A')).toThrow();
+    expect(() => screen.getByRole('button', { name: 'Change Text' })).toThrow();
 
     const button2 = screen.getByRole('button', { name: 'Save Text' });
     await user.click(button2);
-    expect(screen.getByText('Task 1 of List A')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Change Text' })).toBeInTheDocument();
+    screen.getByText('Task 1 of List A');
+    screen.getByRole('button', { name: 'Change Text' });
+    expect(() => screen.getByRole('textbox', { value: 'Task 1 of List A' })).toThrow();
+    expect(() => screen.getByRole('button', { name: 'Save Text' })).toThrow();
   });
 });
