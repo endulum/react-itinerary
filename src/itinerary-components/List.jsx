@@ -29,12 +29,6 @@ export default function List({ list, isEditable }) {
           ))}
         </ul>
       )}
-
-      {isEditable && (
-        <Link to="/">
-          <button type="button">Overview</button>
-        </Link>
-      )}
     </section>
   );
 }

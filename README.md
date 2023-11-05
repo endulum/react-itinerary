@@ -8,7 +8,7 @@ Exploration of React's features through a To-Do application.
 * [ ] Store itinerary data locally whenever it changes
 * [ ] Use a reducer to manage stateful itinerary data
 * [ ] Use Context to deeply deliver itinerary data
-* [ ] Use Router to navigate between itinerary lists as pages
+* [x] Use Router to navigate between itinerary lists as pages
 * [x] Use testing to fortify confidence in app functionality
 
 ## To Consider
@@ -21,6 +21,9 @@ Exploration of React's features through a To-Do application.
 - [Robin Wieruch: React Testing Library](https://www.robinwieruch.de/react-testing-library/)
 - [Robin Wieruch: Vitest with React Testing Library](https://www.robinwieruch.de/vitest-react-testing-library/)
 
-### Other
+### Routing
+- [Robin Wieruch: React Router 6](https://www.robinwieruch.de/react-router/)
+
+### PropTypes
 - [The Odin Project: Type Checking With PropTypes](https://www.theodinproject.com/lessons/node-path-react-new-type-checking-with-proptypes)
 - [react.dev: PropTypes Validators](https://legacy.reactjs.org/docs/typechecking-with-proptypes.html#proptypes)

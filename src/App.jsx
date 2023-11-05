@@ -17,10 +17,15 @@ export default function App() {
             key={list.id}
             path={`/list/${list.id}`}
             element={(
-              <List
-                list={list}
-                isEditable
-              />
+              <>
+                <List
+                  list={list}
+                  isEditable
+                />
+                <Link to="/">
+                  <button type="button">Overview</button>
+                </Link>
+              </>
             )}
           />
         ))}
