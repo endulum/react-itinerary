@@ -1,6 +1,4 @@
 import { createContext } from 'react';
-import defaultData from './defaultData';
 
-const ItineraryContext = createContext(defaultData);
-
-export default ItineraryContext;
+export const ItineraryContext = createContext(null);
+export const DispatchContext = createContext(null);

@@ -5,6 +5,7 @@ import {
 import defaultData from './defaultData';
 import List from './itinerary-components/List';
 import Overview from './itinerary-components/Overview';
+import { ItineraryContext, DispatchContext } from './Context';
 
 export default function App() {
   function itineraryReducer(lists, action) {
@@ -30,41 +31,46 @@ export default function App() {
         throw new Error(`Unknown action tyoe ${action.type}`);
     }
   }
+
   const [lists, dispatch] = useReducer(itineraryReducer, defaultData);
 
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route
-          index
-          element={(
-            <Overview
-              lists={lists}
-              dispatch={dispatch}
-            />
-          )}
-        />
-        {lists.map((list) => (
-          <Route
-            key={list.id}
-            path={`/list/${list.id}`}
-            element={(
-              <>
-                <List
-                  list={list}
+    <ItineraryContext.Provider value={lists}>
+      <DispatchContext.Provider value={dispatch}>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route
+              index
+              element={(
+                <Overview
+                  lists={lists}
                   dispatch={dispatch}
-                  isEditable
                 />
-                <Link to="/">
-                  <button type="button">Overview</button>
-                </Link>
-              </>
-            )}
-          />
-        ))}
-        <Route path="*" element={<NoMatch />} />
-      </Route>
-    </Routes>
+              )}
+            />
+            {lists.map((list) => (
+              <Route
+                key={list.id}
+                path={`/list/${list.id}`}
+                element={(
+                  <>
+                    <List
+                      list={list}
+                      dispatch={dispatch}
+                      isEditable
+                    />
+                    <Link to="/">
+                      <button type="button">Overview</button>
+                    </Link>
+                  </>
+                )}
+              />
+            ))}
+            <Route path="*" element={<NoMatch />} />
+          </Route>
+        </Routes>
+      </DispatchContext.Provider>
+    </ItineraryContext.Provider>
   );
 }
 

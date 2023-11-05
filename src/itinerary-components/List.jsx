@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Task from './Task';
+import { DispatchContext } from '../Context';
 
 export default function List({
-  list, dispatch, isEditable,
+  list, isEditable,
 }) {
   const [changing, setChanging] = useState(false);
+  const dispatch = useContext(DispatchContext);
   function toggleChanging() { setChanging(!changing); }
   function handleEditListTitle(listId, title) {
     dispatch({
@@ -42,8 +44,6 @@ export default function List({
               listId={list.id}
               key={task.id}
               task={task}
-              dispatch={dispatch}
-              // onEditTaskText={onEditTaskText}
               isEditable={isEditable}
             />
           ))}
@@ -63,9 +63,6 @@ List.propTypes = {
       done: PropTypes.bool,
     })),
   }).isRequired,
-  dispatch: PropTypes.func.isRequired,
-  // onEditListTitle: PropTypes.func.isRequired,
-  // onEditTaskText: PropTypes.func.isRequired,
   isEditable: PropTypes.bool,
 };
 

@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { DispatchContext } from '../Context';
 
 export default function Task({
-  listId, task, isEditable, dispatch,
+  listId, task, isEditable,
 }) {
   const [changing, setChanging] = useState(false);
+  const dispatch = useContext(DispatchContext);
   function toggleChanging() { setChanging(!changing); }
   function handleEditTaskText(listId, taskId, text) {
     dispatch({
@@ -42,8 +44,6 @@ Task.propTypes = {
     text: PropTypes.string,
     done: PropTypes.bool,
   }).isRequired,
-  dispatch: PropTypes.func.isRequired,
-  // onEditTaskText: PropTypes.func.isRequired,
   isEditable: PropTypes.bool,
 };
 

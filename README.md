@@ -27,6 +27,10 @@ Exploration of React's features through a To-Do application.
 ### Routing
 - [Robin Wieruch: React Router 6](https://www.robinwieruch.de/react-router/)
 
+### Context
+- [react.dev: Scaling Up with Reducer and Context](https://react.dev/learn/scaling-up-with-reducer-and-context)
+- [Robin Wieruch: React State Hooks: useReducer, useState, useContext](https://www.robinwieruch.de/react-state-usereducer-usestate-usecontext/)
+
 ### PropTypes
 - [The Odin Project: Type Checking With PropTypes](https://www.theodinproject.com/lessons/node-path-react-new-type-checking-with-proptypes)
 - [react.dev: PropTypes Validators](https://legacy.reactjs.org/docs/typechecking-with-proptypes.html#proptypes)
