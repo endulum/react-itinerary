@@ -2,13 +2,12 @@ import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { DispatchContext } from '../Context';
 
-export default function Task({
-  listId, task, isEditable,
-}) {
+export default function Task({ listId, task, isEditable }) {
   const [changing, setChanging] = useState(false);
-  const dispatch = useContext(DispatchContext);
   function toggleChanging() { setChanging(!changing); }
-  function handleEditTaskText(listId, taskId, text) {
+
+  const dispatch = useContext(DispatchContext);
+  function handleEditTaskText(taskId, text) {
     dispatch({
       type: 'edit_task_text',
       listId,
@@ -23,7 +22,7 @@ export default function Task({
         type="text"
         defaultValue={task.text}
         onChange={(e) => {
-          handleEditTaskText(listId, task.id, e.target.value);
+          handleEditTaskText(task.id, e.target.value);
         }}
       />
       <button type="button" onClick={toggleChanging}>Save Text</button>

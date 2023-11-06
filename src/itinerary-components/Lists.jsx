@@ -2,36 +2,26 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import List from './List';
 
-export default function Overview({ lists, dispatch }) {
+export default function Lists({ lists }) {
   return (
-    <>
+    <div>
       {lists.length > 0 ? lists.map((list) => (
         <div key={list.id}>
-          <List
-            list={list}
-            isEditable={false}
-            dispatch={dispatch}
-            // onEditListTitle={onEditListTitle}
-            // onEditTaskText={onEditTaskText}
-          />
+          <List list={list} isEditable={false} />
           <Link to={`/list/${list.id}`}>
             <button type="button">Edit this list</button>
           </Link>
         </div>
       )) : (
         <p>
-          No lists...
+          No lists.
         </p>
       )}
-      <br />
-      <Link to="/bad">
-        <button type="button">Click here to 404!</button>
-      </Link>
-    </>
+    </div>
   );
 }
 
-Overview.propTypes = {
+Lists.propTypes = {
   lists: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,
@@ -41,5 +31,4 @@ Overview.propTypes = {
       done: PropTypes.bool,
     })),
   })).isRequired,
-  dispatch: PropTypes.func.isRequired,
 };

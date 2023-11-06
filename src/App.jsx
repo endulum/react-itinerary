@@ -2,75 +2,49 @@ import { useReducer } from 'react';
 import {
   Routes, Route, Outlet, Link,
 } from 'react-router-dom';
-import defaultData from './defaultData';
+
+import Lists from './itinerary-components/Lists';
 import List from './itinerary-components/List';
-import Overview from './itinerary-components/Overview';
-import { ItineraryContext, DispatchContext } from './Context';
+import { DispatchContext } from './Context';
+import itineraryReducer from './itineraryReducer';
+import defaultData from './defaultData';
 
 export default function App() {
-  function itineraryReducer(lists, action) {
-    switch (action.type) {
-      case 'edit_list_title':
-        return [...lists.map((list) => {
-          if (list.id === action.listId) return { ...list, title: action.title };
-          return list;
-        })];
-      case 'edit_task_text':
-        return [...lists.map((list) => {
-          if (list.id === action.listId) {
-            return {
-              ...list,
-              tasks: [...list.tasks.map((task) => {
-                if (task.id === action.taskId) return { ...task, text: action.text };
-                return task;
-              })],
-            };
-          } return list;
-        })];
-      default:
-        throw new Error(`Unknown action tyoe ${action.type}`);
-    }
-  }
-
   const [lists, dispatch] = useReducer(itineraryReducer, defaultData);
 
   return (
-    <ItineraryContext.Provider value={lists}>
-      <DispatchContext.Provider value={dispatch}>
-        <Routes>
-          <Route element={<Layout />}>
+    <DispatchContext.Provider value={dispatch}>
+      <Routes>
+        <Route element={<Layout />}>
+          {/* home route */}
+          <Route
+            index
+            element={(
+              <Lists lists={lists} />
+            )}
+          />
+
+          {/* route for each list */}
+          {lists.map((list) => (
             <Route
-              index
+              key={list.id}
+              path={`/list/${list.id}`}
               element={(
-                <Overview
-                  lists={lists}
-                  dispatch={dispatch}
-                />
-              )}
-            />
-            {lists.map((list) => (
-              <Route
-                key={list.id}
-                path={`/list/${list.id}`}
-                element={(
-                  <>
-                    <List
-                      list={list}
-                      dispatch={dispatch}
-                      isEditable
-                    />
-                    <Link to="/">
-                      <button type="button">Overview</button>
-                    </Link>
-                  </>
+                <>
+                  <List list={list} isEditable />
+                  <Link to="/">
+                    <button type="button">Back to List Overview</button>
+                  </Link>
+                </>
                 )}
-              />
-            ))}
-            <Route path="*" element={<NoMatch />} />
-          </Route>
-        </Routes>
-      </DispatchContext.Provider>
-    </ItineraryContext.Provider>
+            />
+          ))}
+
+          {/* catchall route */}
+          <Route path="*" element={<NoMatch />} />
+        </Route>
+      </Routes>
+    </DispatchContext.Provider>
   );
 }
 
@@ -88,9 +62,9 @@ function Layout() {
 function NoMatch() {
   return (
     <>
-      <p>Uh oh! You friccin moron. You just got NO MATCHED!</p>
+      <p>No list found at this URL.</p>
       <Link to="/">
-        <button type="button">Click here to totally go home.</button>
+        <button type="button">Back to List Overview</button>
       </Link>
     </>
   );
