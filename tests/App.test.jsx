@@ -11,19 +11,18 @@ describe('App', () => {
   });
 });
 
-// describe('routing behavior', () => {
-//   it('can navigate in and out of all lists as pages', () => {
-//     render(<BrowserRouter><App /></BrowserRouter>);
-//     const user = userEvent.setup();
-//     const lists = screen.queryAllByRole('button', { name: 'Edit this list' });
-//     lists.forEach(async (list) => {
-//       await user.click(list);
-//       await user.click(screen.getByRole('button', { name: 'Back to List Overview' }));
-//     });
-//   });
-// });
-
-// if the above code block is tested, then the following tests fail - investigate this
+describe('routing behavior', () => {
+  it('can navigate in and out of all lists as pages', async () => {
+    render(<BrowserRouter><App /></BrowserRouter>);
+    const user = userEvent.setup();
+    await user.click(screen.queryAllByRole('button', { name: 'Edit this list' })[0]);
+    await user.click(screen.getByRole('button', { name: 'Back to List Overview' }));
+    await user.click(screen.queryAllByRole('button', { name: 'Edit this list' })[1]);
+    await user.click(screen.getByRole('button', { name: 'Back to List Overview' }));
+    await user.click(screen.queryAllByRole('button', { name: 'Edit this list' })[2]);
+    await user.click(screen.getByRole('button', { name: 'Back to List Overview' }));
+  });
+});
 
 describe('functional behavior', () => {
   it('can change the title of a list', async () => {
