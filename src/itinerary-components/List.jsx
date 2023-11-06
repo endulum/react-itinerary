@@ -17,6 +17,20 @@ export default function List({ list, isEditable }) {
     });
   }
 
+  function handleDeleteList() {
+    dispatch({
+      type: 'delete_list',
+      listId: list.id,
+    });
+  }
+
+  function handleAddTask() {
+    dispatch({
+      type: 'add_task',
+      listId: list.id,
+    });
+  }
+
   return (
     <section key={list.id}>
       {changing ? (
@@ -38,7 +52,7 @@ export default function List({ list, isEditable }) {
         </div>
       )}
 
-      {list.tasks.length > 0 && (
+      {list.tasks.length > 0 ? (
         <ul>
           {list.tasks.map((task) => (
             <Task
@@ -49,7 +63,17 @@ export default function List({ list, isEditable }) {
             />
           ))}
         </ul>
+      ) : (
+        <p>No Tasks</p>
       )}
+
+      {isEditable && (
+        <div>
+          <button type="button" onClick={handleAddTask}>Add a Task</button>
+          <button type="button" onClick={handleDeleteList}>Delete this list</button>
+        </div>
+      )}
+
     </section>
   );
 }

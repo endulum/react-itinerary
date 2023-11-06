@@ -17,20 +17,49 @@ export default function Task({ listId, task, isEditable }) {
     });
   }
 
-  return changing ? (
+  function handleDeleteTask() {
+    dispatch({
+      type: 'delete_task',
+      listId,
+      taskId: task.id,
+    });
+  }
+
+  function handleToggleTask(e) {
+    dispatch({
+      type: 'toggle_task',
+      listId,
+      taskId: task.id,
+      done: e.target.checked,
+    });
+  }
+
+  return (
     <li>
-      <input
-        type="text"
-        defaultValue={task.text}
-        onChange={handleEditTaskText}
-      />
-      <button type="button" onClick={toggleChanging}>Save Text</button>
-    </li>
-  ) : (
-    <li>
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label>{task.text}</label>
-      {isEditable && <button type="button" onClick={toggleChanging}>Change Text</button>}
+      {changing ? (
+        <>
+          <input
+            type="text"
+            defaultValue={task.text}
+            onChange={handleEditTaskText}
+          />
+          <button type="button" onClick={toggleChanging}>Save Text</button>
+        </>
+      ) : (
+        <>
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label>
+            <input type="checkbox" checked={task.done} onChange={handleToggleTask} />
+            {task.text}
+          </label>
+          {isEditable && (
+            <>
+              <button type="button" onClick={toggleChanging}>Change Text</button>
+              <button type="button" onClick={handleDeleteTask}>Delete</button>
+            </>
+          ) }
+        </>
+      )}
     </li>
   );
 }

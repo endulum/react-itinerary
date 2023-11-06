@@ -12,9 +12,10 @@ Exploration of React's features through a To-Do application.
 * [x] Use testing to fortify confidence in app functionality
  
 ## To Do
-- add functions for adding and deleting tasks/lists
-- revisit router + context structure
+- use enter key to submit info when editing task/lists
+- after delete, redirect to list overview
 - explore styling
+- reformat dom structure for styling and adjust tests as needed
 
 ## Resources
 ### Testing
