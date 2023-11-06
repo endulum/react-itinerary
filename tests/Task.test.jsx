@@ -3,21 +3,21 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Task from '../src/itinerary-components/Task';
 
-describe('Task render', async () => {
-  const dummy = {
-    id: '1',
-    text: 'Task 1 of List A',
-    done: false,
-  };
+const dummy = {
+  id: '1',
+  text: 'Task 1 of List A',
+  done: false,
+};
 
+describe('Task render', async () => {
   it('should render a span and a button to edit the text', () => {
-    render(<Task task={dummy} />);
+    render(<Task task={dummy} listId="1" />);
     screen.getByText('Task 1 of List A');
     screen.getByRole('button', { name: 'Change Text' });
   });
 
   it('should render an input and a button when button to edit task is clicked', async () => {
-    render(<Task task={dummy} />);
+    render(<Task task={dummy} listId="1" />);
     const user = userEvent.setup();
 
     const button1 = screen.getByRole('button', { name: 'Change Text' });

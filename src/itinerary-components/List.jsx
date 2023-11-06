@@ -1,13 +1,14 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Task from './Task';
-import { DispatchContext } from '../Context';
+import { useDispatch } from '../Context';
 
 export default function List({ list, isEditable }) {
   const [changing, setChanging] = useState(false);
   function toggleChanging() { setChanging(!changing); }
 
-  const dispatch = useContext(DispatchContext);
+  const dispatch = useDispatch();
+
   function handleEditListTitle(title) {
     dispatch({
       type: 'edit_list_title',
